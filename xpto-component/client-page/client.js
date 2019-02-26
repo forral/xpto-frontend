@@ -16,9 +16,13 @@ var client = (function() {
                 stopLoadAnimation();
                 app.innerHTML = templateClientInfo(json[0]);
             })
-            .catch(error => console.log(error));
+            .catch(error => {
+                stopLoadAnimation();
+                translateErrorMessages(error);
+            });
     }
 
+    // load animations should be in a Helper .js file
     function startLoadAnimation() {
         // mock the loading animation
         app.textContent = 'Loading...'
@@ -27,6 +31,17 @@ var client = (function() {
     function stopLoadAnimation() {
         // mock the loading animation
         app.textContent = '';
+    }
+
+    function translateErrorMessages(error) {
+        switch (error) {
+            case value: 'something'
+                // do this
+                break;
+            default:
+                console.log(error);
+                break;
+        }
     }
 
     function templateClientInfo(clientData) {

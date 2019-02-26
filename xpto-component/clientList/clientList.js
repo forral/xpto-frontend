@@ -11,7 +11,20 @@ var clientList = (function() {
         });
     }
 
+    function templateClientList(clientList) {
+        return `<ul id="client-list">
+                    <li id="${clientList.id}">${clientList.name}</li>
+                    <li id="${clientList.id}">${clientList.name}</li>
+                    <li id="${clientList.id}">${clientList.name}</li>
+                    <li id="${clientList.id}">${clientList.name}</li>
+                    <li id="${clientList.id}">${clientList.name}</li>
+                    <li id="${clientList.id}">${clientList.name}</li>
+                </ul>`;
+    }
+
     function init() {
+        // 1. http request
+        // 2. template
         registerListeners();
     }
 
