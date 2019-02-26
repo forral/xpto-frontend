@@ -15,17 +15,6 @@
         <li id="5">client 5</li>
         <li id="6">client 6</li>
     </ul>
-    <script>
-    
-        var clientList = document.querySelectorAll('#client-list li');
-        clientList = [...clientList];
-
-        clientList.forEach(function(client) {
-            client.addEventListener('click', function(client) {
-                console.log('file:///Users/luisforra/workspace/xpto-frontend/xpto-component/client-page.client.html/' + client.target.id);
-            });
-        });
-
-    </script>
+    <script src="clientList.js"></script>
 </body>
 </html>
