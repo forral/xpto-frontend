@@ -35,7 +35,9 @@ var createClientComponent = (function() {
     }
 
     function init() {
+        // 1. Templates
         registerListeners();
+        // 3. htttp request
     }
 
     return {

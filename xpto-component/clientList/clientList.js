@@ -7,39 +7,34 @@ var clientList = (function() {
         {"id": "004", "name": "Angel Di Maria", "address": "Av. D. João I, Almada", "email": "di_maria@omaior.com", "phone": "+351928711633", "NIF": "002982722"},
         {"id": "005", "name": "Ariel Ortega", "address": "Rua Capitão Leitão, Almada", "email": "burrito@omaior.com", "phone": "+351914465643", "NIF": "982982722"}
     ]
+    
+    var CONST = {
+        LI_IDENTIFIER: 'client-list-item',
+        CLIENT_PAGE_URL: '../client-page/client.html?id='
+    }
 
     var app = document.querySelector('#app');
-    var clientPageURL = '../client-page/client.html?id=';
 
     function registerListeners() {
         var clientList = document.querySelector('#client-list');
-        // clientList = [...clientList];
-
-        /*clientList.forEach(function (client) {
-            client.addEventListener('click', function (client) {
-                window.location.replace(clientPageURL + client.target.id);  
-            });
-        });*/
-
 
         clientList.addEventListener('click', function(event) {
-
-            console.log(event);
-
+            if (event.target.dataset.name === CONST.LI_IDENTIFIER) {
+                window.location.replace(CONST.CLIENT_PAGE_URL + event.target.id);
+            }
         });
-
     }
 
     function templateClientList(clientList) {
         return `<ul id="client-list">
-                    ${clientList.map(client => `<li id="${client.id}">${client.name}</li>`).join('')}
+                    ${clientList.map(client => `<li id="${client.id}" data-name="${CONST.LI_IDENTIFIER}">${client.name}</li>`).join('')}
                 </ul>`;
     }
 
     function init() {
         // 1. http request
         // 2. template [DONE]
-        // 3. listeners [DONE] TODO: buble
+        // 3. listeners [DONE]
         app.innerHTML = templateClientList(mockdataClientList);
         registerListeners();
     }
@@ -50,7 +45,7 @@ var clientList = (function() {
 })();
 
 document.onreadystatechange = function () {
-    if (document.readyState === "interactive") {
+    if (document.readyState === 'interactive') {
         clientList.init();
     }
 }
