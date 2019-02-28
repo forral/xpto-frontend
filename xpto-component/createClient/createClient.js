@@ -2,7 +2,46 @@ var createClientComponent = (function() {
 
     var saveButton = document.querySelector('#save');
     var inputs = document.querySelectorAll('#createClient input');
+    var districtsCombo = document.querySelector('#districts');
+    var countiesCombo = document.querySelector('#counties');
 
+    function populateDistrictsCombo(districts) {
+        districts.forEach(function(district) {
+            var opt = createOptionElement(district.district, district.district);
+            districtsCombo.appendChild(opt);
+        });
+    }
+
+    function populateContiesCombo(currentDistrict) {
+        var districtObj = findDistricObjectByDistricName(currentDistrict);
+        var currentCounties = districtObj.counties;
+
+        currentCounties.forEach(function(county) {
+            var opt = createOptionElement(county, county);
+            countiesCombo.appendChild(opt);            
+        });
+    }
+
+    function resetComboOptionsToDefault(comboElement) {
+        var opt = createOptionElement('select', 'Select');
+        comboElement.innerHTML = '';
+        comboElement.appendChild(opt);
+    }
+
+    function createOptionElement(valueAttribute, innerHtml) {
+        var opt = document.createElement('option');
+        opt.value = valueAttribute;
+        opt.innerHTML = innerHtml;
+        return opt;
+    }
+
+    function findDistricObjectByDistricName(currentDistrict) {
+        return districts.find(function(districtObj) {
+            return districtObj.district === currentDistrict;
+        });
+    }
+
+    // TODO: modulate this function
     function createClient() {
         var url = 'https://jsonplaceholder.typicode.com/posts';
         var data = getAllInputValues([...inputs]);
@@ -32,10 +71,24 @@ var createClientComponent = (function() {
             event.preventDefault();
             createClient();
         });
+
+        districtsCombo.addEventListener('change', function(event) {
+            var districtSelected = event.target.value;
+
+            resetComboOptionsToDefault(countiesCombo);
+            
+            if (districtSelected === 'select') {
+                countiesCombo.disabled = true;
+                return;
+            }
+
+            countiesCombo.disabled = false;
+            populateContiesCombo(districtSelected);
+        });
     }
 
     function init() {
-        // 1. Templates
+        populateDistrictsCombo(districts);
         registerListeners();
         // 3. htttp request
     }
