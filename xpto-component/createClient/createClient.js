@@ -1,9 +1,11 @@
 var createClientComponent = (function() {
 
     var saveButton = document.querySelector('#save');
-    var inputs = document.querySelectorAll('#createClient input');
+    var peronalDataInputs = document.querySelectorAll('.personal-information input');
     var districtsCombo = document.querySelector('#districts');
     var countiesCombo = document.querySelector('#counties');
+    var addressIpunts = document.querySelectorAll('.address input');
+    var addressSelects = document.querySelectorAll('.address select');
 
     function populateDistrictsCombo(districts) {
         districts.forEach(function(district) {
@@ -44,10 +46,13 @@ var createClientComponent = (function() {
     // TODO: modulate this function
     function createClient() {
         var url = 'https://jsonplaceholder.typicode.com/posts';
-        var data = getAllInputValues([...inputs]);
+        var data = getPeronalInfoValues([...peronalDataInputs]);
+        var addressData = getAddressValues([...addressIpunts], [...addressSelects]);
+
+        data.address = addressData;
 
         // POST MOCK DATA WITH JSONPLACEHOLDER: https://jsonplaceholder.typicode.com/
-        fetch('https://jsonplaceholder.typicode.com/posts', {
+        /*fetch('https://jsonplaceholder.typicode.com/posts', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -57,13 +62,32 @@ var createClientComponent = (function() {
         .then(response => response.json())
         .then(json => console.log(json)) // TODO: fire the view mode.
         .catch(error => console.log(error)); // TODO: fire translate error message.
+        */
+       console.log(data);
     }
 
-    function getAllInputValues(inputs) {
+    function getPeronalInfoValues(inputs) {
         return inputs.reduce(function(acc, current) {
             acc[current.name] = current.value;
             return acc;
         }, {});
+    }
+
+    function getAddressValues(addressInputValues, addressSelectValues) {
+        
+        var address = {};
+
+        addressInputValues.reduce(function(acc, current) {
+            acc[current.name] = current.value;
+            return acc;
+        }, address);
+
+        addressSelectValues.reduce(function(acc, current) {
+            acc[current.name] = current.value;
+            return acc;
+        }, address);
+
+        return address;
     }
 
     function registerListeners() {

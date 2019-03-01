@@ -25,4 +25,6 @@ https://www.uxbooth.com/articles/the-new-rules-of-form-design/
     - procurar como colcoar um select inactivo
     - como limpar todos os options.
 
-- [ ] create an address object in the createClient page
+- [x] create an address object in the createClient page
+- [x] validação de campos por tipo
+- [ ] validação de campos obrigatorios
