@@ -28,46 +28,56 @@
             </div>
 
             <div>
-                <label for="nif">NIF:</label>
-                <input type="text" id="nif" name="nif" required minlength="9" maxlength="9">
+                <label for="fiscalNumber">NIF:</label>
+                <input type="text" id="fiscal-number" name="fiscalNumber" required minlength="9" maxlength="9">
             </div>
         </div>
         <!-- end of personal information subsection -->
 
         <!-- address subsection -->
         <div class="address subsection">
-            <div>
-                <label for="street">Street:</label>
-                <input type="text" id="street" name="street">
+
+            <!-- street details sub subsection -->
+            <div class="street-details">
+                <div>
+                    <label for="street">Street:</label>
+                    <input type="text" id="street" name="street">
+                </div>
+        
+                <div>
+                    <label for="district">District:</label>
+                    <select id="districts" name="district">
+                        <option value="select">Select</option>
+                    </select>
+                </div>
+        
+                <div>
+                    <label for="county">County:</label>
+                    <select id="counties" name="county" disabled>
+                        <option value="select">Select</option>
+                    </select>
+                </div>
+        
+                <div>
+                    <label for="localidade">Localidade:</label>
+                    <input type="localidade" id="localidade" name="localidade">
+                </div>
             </div>
+            <!-- end of street details sub subsection -->
     
-            <div>
-                <label for="district">District:</label>
-                <select id="districts" name="district">
-                    <option value="select">Select</option>
-                </select>
+            <!-- zip code sub subsection -->
+            <div class="zip-code">
+                <div>
+                    <label for="zip-code">Zip-code:</label>
+                    <input type="zip-code" name="zipCode" minlength="4" maxlength="4">
+                </div>
+        
+                <div>
+                    <input type="zip-code-sufix" name="zipCodeSufix" minlength="3" maxlength="3">
+                </div>
             </div>
-    
-            <div>
-                <label for="county">County:</label>
-                <select id="counties" name="county" disabled>
-                    <option value="select">Select</option>
-                </select>
-            </div>
-    
-            <div>
-                <label for="localidade">Localidade:</label>
-                <input type="localidade" id="localidade" name="localidade">
-            </div>
-    
-            <div>
-                <label for="zip-code">Zip-code:</label>
-                <input type="zip-code" id="zip-code" name="zipCode" minlength="4" maxlength="4">
-            </div>
-    
-            <div>
-                <input type="zip-code-sufix" id="zip-code-sufix" name="zipCodeSufix" minlength="3" maxlength="3">
-            </div>
+            <!-- end of zip code sub subsection -->
+
         </div>
         <!-- end of address subsection -->
 

@@ -4,8 +4,9 @@ var createClientComponent = (function() {
     var peronalDataInputs = document.querySelectorAll('.personal-information input');
     var districtsCombo = document.querySelector('#districts');
     var countiesCombo = document.querySelector('#counties');
-    var addressIpunts = document.querySelectorAll('.address input');
-    var addressSelects = document.querySelectorAll('.address select');
+    var addressIpunts = document.querySelectorAll('.street-details input');
+    var addressSelects = document.querySelectorAll('.street-details select');
+    var zipCodeInputs = document.querySelectorAll('.zip-code input');
 
     function populateDistrictsCombo(districts) {
         districts.forEach(function(district) {
@@ -45,14 +46,13 @@ var createClientComponent = (function() {
 
     // TODO: modulate this function
     function createClient() {
-        var url = 'https://jsonplaceholder.typicode.com/posts';
-        var data = getPeronalInfoValues([...peronalDataInputs]);
-        var addressData = getAddressValues([...addressIpunts], [...addressSelects]);
-
+        var url = 'http://xptoproject.ddns.net:8080/XPTO-Project/customer/';
+        var data = getPersonalInfoValues([...peronalDataInputs]);
+        var addressData = getAddressValues([...addressIpunts], [...addressSelects], [...zipCodeInputs]);
         data.address = addressData;
 
         // POST MOCK DATA WITH JSONPLACEHOLDER: https://jsonplaceholder.typicode.com/
-        /*fetch('https://jsonplaceholder.typicode.com/posts', {
+        fetch(url, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -62,18 +62,19 @@ var createClientComponent = (function() {
         .then(response => response.json())
         .then(json => console.log(json)) // TODO: fire the view mode.
         .catch(error => console.log(error)); // TODO: fire translate error message.
-        */
-       console.log(data);
+        
+       console.log(JSON.stringify(data));
     }
 
-    function getPeronalInfoValues(inputs) {
+    function getPersonalInfoValues(inputs) {
         return inputs.reduce(function(acc, current) {
             acc[current.name] = current.value;
             return acc;
         }, {});
     }
 
-    function getAddressValues(addressInputValues, addressSelectValues) {
+    // refactor this function - maybe use join to deal with just one array
+    function getAddressValues(addressInputValues, addressSelectValues, zipCodeInputValues) {
         
         var address = {};
 
@@ -86,6 +87,18 @@ var createClientComponent = (function() {
             acc[current.name] = current.value;
             return acc;
         }, address);
+
+        // 1. deal with getting the zip code here
+        // 2. join the values
+
+        var zipCodeWithPrefix = zipCodeInputValues.reduce(function(acc, current) {
+            acc.push(current.value);
+            return acc;
+        }, []).join('-');
+
+        // 3. add them to the address object
+
+        address.zipcode = zipCodeWithPrefix;
 
         return address;
     }
