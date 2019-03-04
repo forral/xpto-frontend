@@ -27,7 +27,8 @@ https://www.uxbooth.com/articles/the-new-rules-of-form-design/
 
 - [x] create an address object in the createClient page
 - [x] validação de campos por tipo
-
 - [x] mudar os nomes do object para fazer match com o BE
-
 - [ ] validação de campos obrigatorios (waiting for ux/ui)
+    - https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation
+    - https://medium.com/the-ui-files/form-validation-with-javascript-4fcf4dd32846
+- [ ] https://code.lengstorf.com/get-form-values-as-json/
