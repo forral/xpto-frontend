@@ -1,7 +1,6 @@
-http://www.ctt.pt/pdcp/xml_pdcp?inlocal=casal+de+cambra&inrua=rua+palma
-http://www.ctt.pt/pdcp/xml_pdcp?inlocal=almada&inrua=praca+gil+vicente
+# Notes
 
-IDEAS:
+## IDEAS:
 - send SMS
 - send EMAIL
 - Customer Interactions (guardar informação de toda interacção com cliente. expl: correios enviados, sms enviados, etc...)
@@ -21,14 +20,19 @@ https://www.uxbooth.com/articles/the-new-rules-of-form-design/
     1. dinamic populate the district options
     2. event listener to CHANGE in the distric
     3. dinamic populate the counties options
-
     - procurar como colcoar um select inactivo
     - como limpar todos os options.
-
 - [x] create an address object in the createClient page
 - [x] validação de campos por tipo
 - [x] mudar os nomes do object para fazer match com o BE
-- [ ] validação de campos obrigatorios (waiting for ux/ui)
+
+---
+
+- [x] Change the input field names and test the connection to Backend with the createCustomer endpoint
+
+- [ ] validação de campos obrigatorios.
     - https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation
     - https://medium.com/the-ui-files/form-validation-with-javascript-4fcf4dd32846
-- [ ] https://code.lengstorf.com/get-form-values-as-json/
+
+- [ ] Util for take values from forms and build a json object. 
+    - https://code.lengstorf.com/get-form-values-as-json/

@@ -7,6 +7,7 @@ var createClientComponent = (function() {
     var addressIpunts = document.querySelectorAll('.street-details input');
     var addressSelects = document.querySelectorAll('.street-details select');
     var zipCodeInputs = document.querySelectorAll('.zip-code input');
+    var form = document.querySelector('#createClient');
 
     function populateDistrictsCombo(districts) {
         districts.forEach(function(district) {
@@ -51,7 +52,6 @@ var createClientComponent = (function() {
         var addressData = getAddressValues([...addressIpunts], [...addressSelects], [...zipCodeInputs]);
         data.address = addressData;
 
-        // POST MOCK DATA WITH JSONPLACEHOLDER: https://jsonplaceholder.typicode.com/
         fetch(url, {
             method: 'POST',
             body: JSON.stringify(data),
@@ -63,7 +63,7 @@ var createClientComponent = (function() {
         .then(json => console.log(json)) // TODO: fire the view mode.
         .catch(error => console.log(error)); // TODO: fire translate error message.
         
-       console.log(JSON.stringify(data));
+        console.log(JSON.stringify(data));
     }
 
     function getPersonalInfoValues(inputs) {
@@ -98,7 +98,7 @@ var createClientComponent = (function() {
 
         // 3. add them to the address object
 
-        address.zipcode = zipCodeWithPrefix;
+        address.zipCode = zipCodeWithPrefix;
 
         return address;
     }
