@@ -31,8 +31,13 @@ https://www.uxbooth.com/articles/the-new-rules-of-form-design/
 - [x] Change the input field names and test the connection to Backend with the createCustomer endpoint
 
 - [ ] validação de campos obrigatorios.
+    - https://css-tricks.com/form-validation-part-1-constraint-validation-html/
     - https://developer.mozilla.org/en-US/docs/Learn/HTML/Forms/Form_validation
     - https://medium.com/the-ui-files/form-validation-with-javascript-4fcf4dd32846
+
+    - [ ] Refactor formsValidation lib based on this article:
+        - https://blog.wax-o.com/2015/05/an-alternative-to-if-else-and-switch-in-javascript/
+    -[ ] Develop a way to setup the lib with custom messages.
 
 - [ ] Util for take values from forms and build a json object. 
     - https://code.lengstorf.com/get-form-values-as-json/

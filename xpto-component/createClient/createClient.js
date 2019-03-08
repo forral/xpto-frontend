@@ -60,7 +60,12 @@ var createClientComponent = (function() {
             }
         })
         .then(response => response.json())
-        .then(json => console.log(json)) // TODO: fire the view mode.
+        .then(json => {
+            if (json && json.success) {
+                // TODO: fire the view mode.
+                console.log('Ready to redirect to a especific cliente page with the id: ' + json.id);
+            }
+        })
         .catch(error => console.log(error)); // TODO: fire translate error message.
         
         console.log(JSON.stringify(data));
@@ -127,7 +132,8 @@ var createClientComponent = (function() {
     function init() {
         populateDistrictsCombo(districts);
         registerListeners();
-        // 3. htttp request
+        // 3. validate fields
+        // 4. htttp request
     }
 
     return {
@@ -137,7 +143,7 @@ var createClientComponent = (function() {
 })();
 
 document.onreadystatechange = function() {
-    if (document.readyState === "interactive") {
+    if (document.readyState === 'interactive') {
         createClientComponent.init();
     }
 }
