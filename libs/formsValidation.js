@@ -1,6 +1,21 @@
 // Based on this post by Chris Ferdinandi: 
 // https://css-tricks.com/form-validation-part-1-constraint-validation-html/
 
+/*
+We can use the .error and .error-message classes to style our form field and error message.
+
+.error {
+  border-color: red;
+}
+
+.error-message {
+  color: red;
+  font-style: italic;
+}
+
+*/
+
+
 // Collect all the forms in the page with the class .validate
 var forms = document.querySelectorAll('.validate');
 forms = [...forms];
@@ -92,7 +107,85 @@ function hasError(field) {
 }
 
 function showError(field, error) {
-    console.log(field, error);
+    
+    // Add error class to field
+    field.classList.add('error');
+
+    // If the field is a radio button and part of a group,
+    // error all and get the last item in the group.
+    if (field.type === 'radio' && field.name) {
+        var group = document.getElementsByName(field.name);
+
+        if (group.length > 0) {
+
+            for (var i = 0; i < group.length; i++) {
+                // Only check fields in current form
+                if (group[i].form !== field.form) {
+                    continue;
+                }
+                group[i].classList.add('error');
+            }
+            field = group[group.length - 1];
+        }
+
+    }
+
+
+    // Get field id or name
+    var id = field.id || field.name;
+    if (!id) {
+        return;
+    }
+
+    // Check if error message field already exists
+    // If not, create on
+    var message = field.form.querySelectorAll('.error-message#error-for-' + id);
+    if (!message) {
+        // TODO: create an method create element:
+        message = document.createElement('div');
+        message.className = 'error-message';
+        message.id = 'error-for-' + id;
+        field.parentNode.insertBefore(message, field.nextSibling);
+    }
+
+    // Add ARIA role to the field
+    // Resource: https://developer.mozilla.org/en-US/docs/Learn/Accessibility/WAI-ARIA_basics
+    field.setAttribute('aria-describedby', 'error-for-' + id);
+        
+    // Update error message
+    message.innerHTML = error;
+
+    // Show error message
+    message.style.display = 'block';
+    message.style.visibility = 'visible';
+
+}
+
+// Remove error message
+function removeError(field) {
+
+    // Remove .error class to field
+    field.classList.remove('error');
+
+    // Remove ARIA role from the field
+    field.removeAttribute('aria-describedby');
+
+    // Get field id or name
+    var id = field.id || field.name;
+    if (!id) {
+        return;
+    }
+
+    // Check if an error message is in the DOM
+    var message = field.form.querySelector('.error-message#error-for-' + id + '');
+    if (!message) {
+        return;
+    }
+
+    // If so, hide it
+    message.innerHTML = '';
+    message.style.display = 'none';
+    message.style.visibility = 'hidden'
 }
 
 // Listen to all blur events
@@ -110,6 +203,10 @@ document.addEventListener('blur', function(event) {
     // If there's an error, show it
     if (error) {
         showError(event.target, error);
+        return;
     }
+
+    // Otherwise, remove any existing error message
+    removeError(event.target);
 
 }, true);
