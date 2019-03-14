@@ -111,13 +111,12 @@ function showError(field, error) {
     // Add error class to field
     field.classList.add('error');
 
+    // TODO: refactor this block of code - if possible into functions DRY.
     // If the field is a radio button and part of a group,
     // error all and get the last item in the group.
     if (field.type === 'radio' && field.name) {
         var group = document.getElementsByName(field.name);
-
         if (group.length > 0) {
-
             for (var i = 0; i < group.length; i++) {
                 // Only check fields in current form
                 if (group[i].form !== field.form) {
@@ -127,9 +126,7 @@ function showError(field, error) {
             }
             field = group[group.length - 1];
         }
-
     }
-
 
     // Get field id or name
     var id = field.id || field.name;
@@ -145,6 +142,20 @@ function showError(field, error) {
         message = document.createElement('div');
         message.className = 'error-message';
         message.id = 'error-for-' + id;
+    }
+
+    // If the field is a radio button or checkbox,
+    // insert error after the label
+    var label;
+    if (field.type === 'radio' || field.type === 'checkbox') {
+        label = field.form.querySelector('label[for="' + id + '"]') || field.parentNode;
+        if (label) {
+            label.parentNode.insertBefore(message, label.nextSibling);
+        }
+    }
+
+    // Otherwise, insert it after the field
+    if (!label) {
         field.parentNode.insertBefore(message, field.nextSibling);
     }
 
@@ -158,7 +169,6 @@ function showError(field, error) {
     // Show error message
     message.style.display = 'block';
     message.style.visibility = 'visible';
-
 }
 
 // Remove error message
@@ -166,6 +176,23 @@ function removeError(field) {
 
     // Remove .error class to field
     field.classList.remove('error');
+
+    // TODO: refactor this block of code - if possible into functions DRY.
+    // If the field is a radio button and part of a group,
+    // remove error from all and get te last item in the group
+    if (field.type === 'radio' && field.name) {
+        var group = document.getElementsByName(field.name);
+        if (group.length > 0) {
+            for (var i = 0; i < group.length; i++) {
+                //Only check fields in current form
+                if (group[i].form !== field.form) {
+                    continue;
+                }
+                group[i].classList.remove('error');
+            }
+            field = group[group.length - 1];
+        }
+    }
 
     // Remove ARIA role from the field
     field.removeAttribute('aria-describedby');
@@ -187,6 +214,27 @@ function removeError(field) {
     message.style.display = 'none';
     message.style.visibility = 'hidden'
 }
+
+// Check all fields on submit
+document.addEventListener('submit', function(event) {
+
+    // Only run on forms flagged for validation
+    if (!event.target.classList.contains('validate')) {
+        return;
+    }
+
+    // Get all of the form elements
+    var field = event.target.elements;
+
+    // Validate each field
+    // Store the first field with an error to a variable so we can
+    // bring it into focus later.
+    var error, hasErrors;
+    for (var i = 0; i < fields.length; i++) {
+        error = hasError(field[i]);
+    }
+
+}, false);
 
 // Listen to all blur events
 document.addEventListener('blur', function(event) {
