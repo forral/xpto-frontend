@@ -232,7 +232,23 @@ document.addEventListener('submit', function(event) {
     var error, hasErrors;
     for (var i = 0; i < fields.length; i++) {
         error = hasError(field[i]);
+        if (error) {
+            showError(field[i], error);
+            if (!hasErrors) {
+                hasErrors = field[i];
+            }
+        }
     }
+
+    // If there are errors, don't submit form and focus on first
+    // element with error.
+    if (hasErrors) {
+        event.preventDefault();
+        hasErrors.focus();
+    }
+
+    // Otherwise, let the form submit normally
+    // TODO: You cold also bolt in an Ajax form submit process here
 
 }, false);
 
