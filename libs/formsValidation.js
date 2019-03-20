@@ -156,6 +156,8 @@ function showError(field, error) {
 
     // Otherwise, insert it after the field
     if (!label) {
+        console.log('message:' + message);
+        console.log('field.nextSibling:' + field.nextSibling);
         field.parentNode.insertBefore(message, field.nextSibling);
     }
 
@@ -249,6 +251,7 @@ document.addEventListener('submit', function(event) {
 
     // Otherwise, let the form submit normally
     // TODO: You cold also bolt in an Ajax form submit process here
+    console.log('all fields are valid, prepare the json to send the request');
 
 }, false);
 
